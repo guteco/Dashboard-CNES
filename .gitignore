@@ -1,0 +1,21 @@
+# Ambiente virtual
+venv/
+.venv/
+
+# Arquivos privados e de dados gerados
+nomes_egressos.txt
+egressos_resultados.csv
+egressos_erros.txt
+mapa_pins.html
+mapa_calor.html
+dashboard_final.html
+grafico_*.html
+
+# Arquivos de sistema
+__pycache__/
+*.pyc
+.DS_Store
+
+# Editor configs
+.vscode/
+.idea/

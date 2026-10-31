@@ -18,20 +18,22 @@ Este projeto tem como finalidade desenvolver uma ferramenta automatizada para **
   - UF
   - CBO (Classificação Brasileira de Ocupações)
 - Faz fallback com nome sem acento, se necessário.
-- Salva os dados em `egressos_resultados.csv` e os erros em `egressos_erros.txt`.
+- Mostra o progresso de cada consulta e registra ocorrências em `scraper.log`.
+- Grava primeiro em `egressos_resultados.tmp.csv` e só substitui `egressos_resultados.csv` se a coleta trouxer ao menos um vínculo válido.
+- Salva os erros em `egressos_erros.txt`.
 
 ### 2. Validação e Limpeza
 - Remove registros incompletos (sem UF, CBO, município).
 - Normaliza e padroniza os nomes.
 - Associa as coordenadas geográficas via merge com um dataset de municípios.
 
-### 3. Visualização Interativa (Folium)
-- Gera um mapa HTML com pins por município.
-- Cada pin exibe:
-  - Quantidade de médicos
-  - Especialidade (CBO)
-- Cores diferentes por tipo de especialidade.
-- Resultado final: `dashboard_final.html` (além de mapas isolados e da página do dashboard).
+### 3. Painel (Folium + Plotly)
+- Mapa de pinos com um pino por vínculo, colorido pela grande área de atuação, com camadas que podem ser ligadas e desligadas. Pinos do mesmo município recebem um pequeno deslocamento determinístico.
+- Mapa de calor da densidade de vínculos.
+- Raio de 150 km em torno de Caicó/RN (distância em linha reta pela fórmula de Haversine), com indicadores e um gráfico comparativo.
+- Gráficos por UF, região, CBO, grande área e recorte territorial.
+- Mapas base sem chave de API (Esri cinza-claro e OpenStreetMap).
+- Saídas: `dashboard_final.html`, `mapa_pins.html`, `mapa_calor.html`, `relatorio_impressao.html` e `metodologia.html`. Os modelos das páginas ficam em `templates/`.
 
 ---
 
@@ -56,17 +58,19 @@ Este projeto é desenvolvido como parte de uma tese de mestrado profissional na 
 
 
 ```bash
-# Instale os requisitos
 pip install -r requirements.txt
+```
 
-# Execute o scraping
+No Windows, rode o fluxo completo com `executar_pipeline.bat`. Ele faz a coleta e só gera o painel se a coleta der certo.
+
+Para rodar cada etapa separadamente:
+
+```bash
 python scraper.py
-
-# Gere o mapa interativo e o dashboard completo
 python dashboard_generator.py
 ```
 
-> Requer: `egressos_resultados.csv` e `municipios.csv` na mesma pasta.
+> O gerador requer `egressos_resultados.csv` e `municipios.csv` na mesma pasta. Para publicar, envie os cinco HTMLs gerados e a pasta `assets/`.
 
 ---
 
@@ -80,7 +84,10 @@ egressos_erros.txt
 mapa_pins.html
 mapa_calor.html
 dashboard_final.html
-grafico_*.html
+/relatorio_impressao.html
+/metodologia.html
+egressos_resultados.tmp.csv
+*.log
 __pycache__/
 ```
 

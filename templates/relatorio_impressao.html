@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Relatório para impressão | Egressos EMCM/UFRN</title>
+  <script charset="utf-8" src="$plotly_js"></script>
+  <style>
+    :root{--navy:#113a67;--blue:#2162a7;--ink:#182235;--muted:#667085;--line:#d9e0e9;--gold:#d69220}
+    *{box-sizing:border-box} body{margin:0;background:#e9eef5;color:var(--ink);font:11pt Arial,sans-serif;line-height:1.5}
+    .toolbar{position:sticky;top:0;z-index:10;background:#102a48;color:#fff;padding:10px 20px;text-align:center}
+    .toolbar button,.toolbar a{display:inline-block;border:0;border-radius:7px;padding:9px 14px;margin:0 4px;background:#fff;color:#123f73;font-weight:bold;text-decoration:none;cursor:pointer}
+    .page{width:210mm;min-height:297mm;margin:18px auto;background:#fff;padding:15mm 16mm;box-shadow:0 8px 30px rgba(15,23,42,.15)}
+    header{display:grid;grid-template-columns:28mm 1fr 34mm;align-items:center;gap:8mm;border-bottom:3px solid var(--navy);padding-bottom:8mm}
+    header img{max-width:100%;max-height:23mm;object-fit:contain} h1{font:700 25pt Georgia,serif;line-height:1.1;color:var(--navy);margin:0 0 3mm}
+    .subtitle{color:var(--muted);font-size:10pt} .meta{margin-top:3mm;color:var(--blue);font-size:8.5pt}
+    h2{font:700 17pt Georgia,serif;color:var(--navy);border-bottom:1px solid var(--line);padding-bottom:2mm;margin:10mm 0 5mm}
+    h3{font-size:11pt;color:var(--navy);margin:5mm 0 2mm} p{margin:0 0 3mm}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin-top:7mm} .metric{border:1px solid var(--line);border-radius:3mm;padding:4mm;text-align:center}
+    .metric strong{display:block;font-size:19pt;color:var(--navy)} .metric span{font-size:8pt;color:var(--muted)}
+    .two-cols{display:grid;grid-template-columns:1fr 1fr;gap:8mm} table{width:100%;border-collapse:collapse;font-size:9pt}
+    th{text-align:left;background:#eef4fa;color:var(--navy)} th,td{padding:2.2mm;border-bottom:1px solid var(--line)} th:last-child,td:last-child{text-align:right}
+    .caico{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;background:#fff8e8;border:1px solid #f2cf8a;border-radius:3mm;padding:4mm}
+    .caico div{text-align:center} .caico strong{display:block;color:#963b16;font-size:16pt} .caico span{font-size:7.5pt;color:#7c4a23}
+    .note{background:#f3f6fa;border-left:3px solid var(--gold);padding:4mm;margin:4mm 0;font-size:9pt}
+    .chart{border:1px solid var(--line);border-radius:3mm;padding:2mm;overflow:hidden} .chart .plotly-graph-div{height:78mm!important}
+    .method{font-size:9.5pt} footer{margin-top:10mm;padding-top:4mm;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:8pt}
+    .page-break{break-before:page}
+    @page{size:A4;margin:0}
+    @media print{
+      body{background:#fff} .toolbar{display:none} .page{margin:0;box-shadow:none;width:auto;min-height:297mm;break-after:page}
+      .page:last-child{break-after:auto} a{color:inherit;text-decoration:none}
+    }
+    @media(max-width:850px){.page{width:100%;min-height:0;margin:0;padding:24px}.two-cols{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="toolbar"><button onclick="window.print()">Imprimir ou salvar em PDF</button><a href="dashboard_final.html">Voltar ao dashboard</a></div>
+  <section class="page">
+    <header><img src="assets/EMCM-UFRN-VERTICAL.png" alt="EMCM"><div><h1>Painel de Egressos da EMCM</h1>
+    <div class="subtitle">Síntese da distribuição geográfica e das áreas de atuação dos profissionais egressos.</div>
+    <div class="meta">Relatório gerado em $data_hora_geracao</div></div><img src="assets/ufrn-logo-2.png" alt="UFRN"></header>
+    <h2>Indicadores gerais</h2>
+    <div class="metrics">$metricas</div>
+    <h2>Influência regional de $centro_nome</h2>
+    <p>Recorte geodésico em linha reta de $raio_km km a partir do centro municipal de $centro_nome/$centro_uf.</p>
+    <div class="caico">$metricas_raio</div>
+    <h2>Principais distribuições</h2>
+    <div class="two-cols"><div><h3>Estados com mais vínculos</h3>$tabela_ufs</div>
+    <div><h3>Municípios com mais vínculos</h3>$tabela_municipios</div></div>
+    <div class="note"><strong>Unidade de análise:</strong> um egresso pode apresentar mais de um vínculo. Portanto, o total de vínculos não corresponde ao total de pessoas únicas.</div>
+  </section>
+  <section class="page page-break">
+    <header><img src="assets/EMCM-UFRN-VERTICAL.png" alt="EMCM"><div><h1>Distribuição territorial</h1>
+    <div class="subtitle">Gráficos consolidados dos vínculos profissionais identificados.</div></div><img src="assets/ufrn-logo-2.png" alt="UFRN"></header>
+    <h2>Distribuição por estado</h2><div class="chart">$grafico_uf</div>
+    <h2>Distribuição por região</h2><div class="chart">$grafico_regiao</div>
+  </section>
+  <section class="page page-break">
+    <header><img src="assets/EMCM-UFRN-VERTICAL.png" alt="EMCM"><div><h1>Perfil de atuação</h1>
+    <div class="subtitle">Ocupações e grandes áreas observadas nos vínculos do CNES.</div></div><img src="assets/ufrn-logo-2.png" alt="UFRN"></header>
+    <h2>Ocupações mais frequentes</h2><div class="chart">$grafico_cbo</div>
+    <h2>Grandes áreas de atuação</h2><div class="chart">$grafico_area</div>
+  </section>
+  <section class="page page-break method">
+    <header><img src="assets/EMCM-UFRN-VERTICAL.png" alt="EMCM"><div><h1>Nota metodológica</h1>
+    <div class="subtitle">Síntese dos procedimentos e limites de interpretação.</div></div><img src="assets/ufrn-logo-2.png" alt="UFRN"></header>
+    <h2>Procedimentos</h2><p>Estudo descritivo, transversal e baseado em dados secundários do CNES/DATASUS. A coleta automatizada consulta os identificadores da lista institucional, extrai vínculos ativos e valida município, UF e CBO. Os registros são cruzados com uma base municipal para atribuição de coordenadas.</p>
+    <p>Os pinos representam centros municipais e recebem pequeno deslocamento visual determinístico quando há sobreposição. A análise de $centro_nome utiliza a fórmula de Haversine e distância em linha reta.</p>
+    <h2>Limitações</h2><ul><li>Dependência da completude e atualização administrativa do CNES.</li><li>Possibilidade de múltiplos vínculos para um mesmo profissional.</li><li>Coordenadas municipais não representam endereço exato.</li><li>Ausência no painel não comprova ausência de atuação profissional.</li></ul>
+    <h2>Privacidade</h2><p>Esta versão apresenta apenas informações agregadas. Arquivos brutos e logs devem permanecer sob controle institucional, conforme os princípios da LGPD e as exigências éticas aplicáveis.</p>
+    <div class="note">A metodologia completa está disponível em <strong>metodologia.html</strong>.</div>
+    <footer><p>Fonte dos dados: CNES DATASUS.</p><p>Desenvolvido por Augusto Severo de Araújo como parte do projeto de mestrado. EMCM/UFRN.</p><p>&copy; $ano Todos os direitos reservados.</p></footer>
+  </section>
+</body></html>

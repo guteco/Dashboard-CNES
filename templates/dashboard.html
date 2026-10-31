@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Painel de Egressos EMCM/UFRN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script charset="utf-8" src="$plotly_js"></script>
+  <style>
+    :root{--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--paper:#fff;--bg:#f1f5f9;--blue:#1d4ed8;--navy:#0b2d52;--gold:#f59e0b}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
+    .hero{background:radial-gradient(circle at 85% 15%,#2563eb 0,transparent 28%),linear-gradient(125deg,#071b32,#0b3c6f);color:#fff;padding:34px 5vw 72px}
+    .hero-inner,.wrap{max-width:1440px;margin:auto} .brand{display:grid;grid-template-columns:230px minmax(0,760px) 190px;align-items:center;justify-content:space-between;gap:28px}
+    .brand-logo{display:flex;align-items:center;justify-content:center;height:190px}
+    .brand img{max-height:96px;max-width:190px;object-fit:contain;background:#fff;border-radius:14px;padding:8px}
+    .brand-logo:first-child img{max-height:180px;max-width:220px;padding:10px}
+    .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:#93c5fd}
+    .hero-nav{display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px} .hero-nav a{color:#dbeafe;text-decoration:none;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.25);padding:8px 13px;border-radius:10px}
+    h1{font-size:clamp(28px,4vw,48px);line-height:1.05;margin:10px 0 12px;max-width:760px}
+    .hero p{color:#cbd5e1;max-width:720px;margin:0;line-height:1.65} .stamp{margin-top:20px;font-size:12px;color:#93c5fd}
+    .wrap{padding:0 5vw 42px} .metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:-38px}
+    .metric,.panel{background:var(--paper);border:1px solid rgba(226,232,240,.9);box-shadow:0 12px 35px rgba(15,23,42,.07);border-radius:18px}
+    .metric{padding:20px;min-height:142px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center} .metric p{font-size:13px;color:var(--muted);margin:0}
+    .metric strong{font-size:30px;margin:14px 0 7px;letter-spacing:-.04em} .metric span{font-size:11px;color:#94a3b8}
+    .section-head{display:flex;justify-content:space-between;align-items:end;margin:38px 2px 16px;gap:16px}
+    .section-head h2{margin:0;font-size:23px} .section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}
+    .tabs{display:flex;background:#e2e8f0;padding:4px;border-radius:12px} .tabs button{border:0;background:transparent;padding:9px 15px;border-radius:9px;cursor:pointer;color:#475569;font-weight:600}
+    .tabs button.active{background:#fff;color:var(--blue);box-shadow:0 2px 8px rgba(15,23,42,.08)}
+    .map-panel{padding:10px} .map-panel iframe{display:block;width:100%;height:650px;border:0;border-radius:12px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px} .panel{padding:8px;min-width:0;overflow:hidden}
+    .note{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;padding:15px 18px;border-radius:14px;font-size:13px;line-height:1.55;margin-top:18px}
+    .regional{margin-top:18px;padding:24px;background:linear-gradient(135deg,#fff7ed,#fffbeb);border:1px solid #fed7aa;border-radius:18px}
+    .regional-head{display:flex;justify-content:space-between;gap:20px;align-items:start;margin-bottom:18px}
+    .regional h3{margin:0 0 6px;font-size:20px} .regional p{margin:0;color:#92400e;font-size:13px}
+    .regional-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .regional-metric{background:rgba(255,255,255,.78);padding:16px;border-radius:13px;text-align:center}
+    .regional-metric strong{display:block;font-size:25px;color:#9a3412} .regional-metric span{font-size:11px;color:#92400e}
+    footer{text-align:center;color:#64748b;font-size:12px;line-height:1.7;padding:12px 20px 36px}
+    footer p{margin:2px 0}
+    @media(max-width:1100px){.metrics{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:760px){.hero{padding-bottom:58px}.brand{grid-template-columns:70px 1fr;gap:16px}.brand-logo:last-child{display:none}.brand-logo{height:70px}.brand img{max-height:60px;max-width:70px}.metrics{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.regional-grid{grid-template-columns:repeat(2,1fr)}.section-head{align-items:start;flex-direction:column}.map-panel iframe{height:520px}}
+    @media(max-width:440px){.metrics{grid-template-columns:1fr}.brand img{height:52px}}
+  </style>
+</head>
+<body>
+  <header class="hero"><div class="hero-inner">
+    <nav class="hero-nav"><a href="relatorio_impressao.html">Versão para impressão</a><a href="metodologia.html">Metodologia e limitações</a></nav>
+    <div class="brand">
+      <div class="brand-logo"><img src="assets/EMCM-UFRN-VERTICAL.png" alt="EMCM/UFRN"></div>
+      <div><div class="eyebrow">Inteligência territorial em saúde</div><h1>Onde estão os egressos da EMCM?</h1>
+      <p>Uma visão interativa da distribuição geográfica e das áreas de atuação dos profissionais egressos da EMCM.</p></div>
+      <div class="brand-logo"><img src="assets/ufrn-logo-2.png" alt="UFRN"></div>
+    </div>
+  </div></header>
+  <main class="wrap">
+    <section class="metrics">$metricas</section>
+    <div class="section-head"><div><h2>Distribuição territorial</h2><p>Use as camadas do mapa para filtrar áreas de atuação.</p></div>
+      <div class="tabs"><button id="pins" class="active" onclick="trocarMapa('mapa_pins.html','pins')">Pinos</button>
+      <button id="calor" onclick="trocarMapa('mapa_calor.html','calor')">Calor</button></div></div>
+    <section class="panel map-panel"><iframe id="mapa" src="mapa_pins.html" title="Mapa dos egressos"></iframe></section>
+    <div class="note"><strong>Como ler:</strong> os pinos próximos ao mesmo município recebem um pequeno deslocamento determinístico. Isso preserva a percepção visual do volume sem alterar o município associado ao vínculo.</div>
+    <section class="regional">
+      <div class="regional-head"><div><h3>Influência regional de $centro_nome</h3>
+      <p>Vínculos localizados em linha reta até $raio_km km do centro de $centro_nome/$centro_uf.</p></div></div>
+      <div class="regional-grid">$metricas_raio</div>
+    </section>
+    <div class="section-head"><div><h2>Perfil dos vínculos</h2><p>Passe o cursor sobre os gráficos para consultar valores.</p></div></div>
+    <section class="grid">
+      <article class="panel">$grafico_uf</article>
+      <article class="panel">$grafico_cbo</article>
+      <article class="panel">$grafico_regiao</article>
+      <article class="panel">$grafico_area</article>
+      <article class="panel" style="grid-column:1/-1">$grafico_raio</article>
+    </section>
+  </main>
+  <footer>
+    <p>Fonte dos dados: CNES DATASUS. Coleta e processamento realizados em $data_geracao.</p>
+    <p>Desenvolvido por Augusto Severo de Araújo como parte do projeto de mestrado. EMCM/UFRN.</p>
+    <p>&copy; $ano Todos os direitos reservados.</p>
+  </footer>
+  <script>
+    function trocarMapa(src,id){
+      document.getElementById('mapa').src=src;
+      document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.id===id));
+    }
+  </script>
+</body></html>

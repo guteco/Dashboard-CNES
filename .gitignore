@@ -4,11 +4,16 @@ venv/
 
 # Arquivos privados e de dados gerados
 nomes_egressos.txt
+rodar_local.bat
 egressos_resultados.csv
 egressos_erros.txt
+egressos_resultados.tmp.csv
+*.log
 mapa_pins.html
 mapa_calor.html
 dashboard_final.html
+/relatorio_impressao.html
+/metodologia.html
 grafico_*.html
 
 # Arquivos de sistema

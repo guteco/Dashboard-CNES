@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Metodologia | Painel de Egressos EMCM/UFRN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Literata:opsz,wght@7..72,600;7..72,700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#172033;--muted:#657087;--blue:#123f73;--light:#f4f7fb;--line:#dce4ef;--gold:#d99927}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;color:var(--ink);background:var(--light);font-family:Inter,Arial,sans-serif;line-height:1.75}
+    .hero{background:linear-gradient(125deg,#071b32,#124f8e);color:#fff;padding:30px 6vw 76px}
+    .hero-inner,.layout{max-width:1220px;margin:auto} .top{display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .logos{display:flex;gap:12px;align-items:center} .logos img{height:62px;max-width:135px;object-fit:contain;background:#fff;padding:6px;border-radius:10px}
+    .back{color:#dbeafe;text-decoration:none;font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.25);padding:9px 14px;border-radius:10px}
+    .eyebrow{margin-top:52px;text-transform:uppercase;letter-spacing:.16em;color:#93c5fd;font-size:12px;font-weight:700}
+    h1{font-family:Literata,Georgia,serif;font-size:clamp(34px,5vw,58px);line-height:1.08;max-width:850px;margin:12px 0 16px}
+    .lead{max-width:820px;color:#dbeafe;font-size:17px} .update{display:inline-block;margin-top:22px;background:rgba(255,255,255,.1);padding:8px 12px;border-radius:9px;font-size:12px;color:#bfdbfe}
+    .layout{display:grid;grid-template-columns:245px minmax(0,1fr);gap:34px;padding:38px 5vw 70px}
+    aside{position:sticky;top:24px;align-self:start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(15,23,42,.05)}
+    aside strong{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue)} aside a{display:block;color:#596579;text-decoration:none;font-size:13px;padding:7px 0;border-bottom:1px solid #edf1f6}
+    article{background:#fff;border:1px solid var(--line);border-radius:20px;padding:clamp(24px,5vw,58px);box-shadow:0 14px 40px rgba(15,23,42,.06)}
+    section{scroll-margin-top:30px;margin-bottom:48px} section:last-child{margin-bottom:0} h2{font-family:Literata,Georgia,serif;color:var(--blue);font-size:27px;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #e7edf5}
+    h3{font-size:16px;color:#243854;margin:24px 0 8px} p{margin:0 0 15px} ul{padding-left:20px} li{margin:7px 0}
+    .numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0} .number{background:#f7f9fc;border:1px solid var(--line);border-radius:13px;padding:16px;text-align:center}
+    .number strong{display:block;color:var(--blue);font-size:25px} .number span{font-size:11px;color:var(--muted)}
+    .formula{background:#f8fafc;border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 12px 12px 0;margin:18px 0;color:#334155}
+    .warning{background:#fff7ed;border:1px solid #fed7aa;padding:18px;border-radius:13px;color:#7c2d12}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:22px 0} .flow div{background:#eff6ff;color:#1e3a8a;border-radius:10px;padding:13px 8px;text-align:center;font-size:11px;font-weight:600;position:relative}
+    footer{text-align:center;color:#718096;font-size:12px;padding:0 20px 35px}
+    @media(max-width:850px){.layout{grid-template-columns:1fr} aside{position:static}.numbers{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}}
+    @media(max-width:520px){.logos img:last-child{display:none}.numbers{grid-template-columns:1fr}article{padding:22px}}
+  </style>
+</head>
+<body>
+  <header class="hero"><div class="hero-inner">
+    <div class="top"><div class="logos"><img src="assets/EMCM-UFRN-VERTICAL.png" alt="EMCM"><img src="assets/ufrn-logo-2.png" alt="UFRN"></div>
+    <a class="back" href="dashboard_final.html">Voltar ao dashboard</a></div>
+    <div class="eyebrow">Mestrado profissional · Nota metodológica</div>
+    <h1>Metodologia de construção do Painel de Egressos</h1>
+    <p class="lead">Descrição dos procedimentos de coleta, tratamento, georreferenciamento e análise utilizados para representar a distribuição territorial dos profissionais egressos da EMCM/UFRN.</p>
+    <span class="update">Última atualização: $data_hora_geracao</span>
+  </div></header>
+  <main class="layout">
+    <aside><strong>Nesta página</strong>
+      <a href="#objetivo">1. Objetivo</a><a href="#fonte">2. Fonte de dados</a>
+      <a href="#coleta">3. Coleta</a><a href="#tratamento">4. Tratamento</a>
+      <a href="#geo">5. Georreferenciamento</a><a href="#indicadores">6. Indicadores</a>
+      <a href="#caico">7. Raio de $centro_nome</a><a href="#visualizacao">8. Visualização</a>
+      <a href="#qualidade">9. Qualidade</a><a href="#limitacoes">10. Limitações</a>
+      <a href="#etica">11. Ética e privacidade</a><a href="#reproducibilidade">12. Reprodutibilidade</a>
+    </aside>
+    <article>
+      <section id="objetivo"><h2>1. Objetivo e desenho do estudo</h2>
+        <p>O painel foi desenvolvido como produto técnico de um trabalho de mestrado profissional, com o objetivo de apoiar o acompanhamento institucional dos egressos da Escola Multicampi de Ciências Médicas da Universidade Federal do Rio Grande do Norte.</p>
+        <p>Trata-se de uma análise descritiva, transversal e de base secundária. O painel retrata os vínculos profissionais disponíveis no CNES na data da coleta e não pretende estabelecer relações causais.</p>
+        <div class="numbers">$numeros</div>
+      </section>
+      <section id="fonte"><h2>2. Fonte de dados</h2>
+        <p>A fonte primária é a consulta pública de profissionais do Cadastro Nacional de Estabelecimentos de Saúde (CNES), mantido pelo DATASUS. Foram extraídos os vínculos ativos associados aos identificadores presentes na lista institucional de egressos.</p>
+        <p>Para cada vínculo são utilizados: identificador de consulta, município, unidade federativa e Classificação Brasileira de Ocupações (CBO). A base auxiliar <code>municipios.csv</code> fornece código da UF e coordenadas centrais dos municípios brasileiros.</p>
+      </section>
+      <section id="coleta"><h2>3. Procedimento de coleta</h2>
+        <div class="flow"><div>Lista institucional</div><div>Consulta automatizada ao CNES</div><div>Leitura dos vínculos ativos</div><div>Validação dos campos</div><div>Arquivo estruturado</div></div>
+        <p>A coleta é automatizada em Python com Selenium e navegador Chrome. Cada identificador é consultado individualmente. O scraper aguarda o carregamento da página, abre a relação de vínculos ativos e extrai os campos válidos.</p>
+        <p>O resultado é gravado inicialmente em arquivo temporário. O arquivo oficial somente é substituído quando a execução produz ao menos um vínculo válido, reduzindo o risco de perda da base anterior em uma interrupção.</p>
+      </section>
+      <section id="tratamento"><h2>4. Tratamento e validação</h2>
+        <p>Os municípios são padronizados em letras maiúsculas, sem espaços laterais e sem sinais diacríticos. A UF é convertida para a sigla oficial e associada ao código utilizado pelo IBGE. Registros sem município, UF, CBO ou coordenadas são excluídos da visualização.</p>
+        <h3>Classificação ocupacional</h3>
+        <p>Os códigos CBO são agrupados em Atenção Básica, Especialidades Clínicas, Especialidades Cirúrgicas, Médico Residente e Outras Especialidades. Essa classificação é operacional e definida explicitamente no código do projeto.</p>
+      </section>
+      <section id="geo"><h2>5. Georreferenciamento</h2>
+        <p>O cruzamento geográfico usa município normalizado e código da UF. As coordenadas representam o centro municipal, não o estabelecimento de saúde nem a residência do profissional.</p>
+        <p>Quando vários vínculos pertencem ao mesmo município, aplica-se um pequeno deslocamento visual determinístico. A técnica permite perceber a concentração de registros sem alterar o município atribuído ao vínculo; portanto, a posição exata de cada pino não deve ser interpretada geograficamente.</p>
+      </section>
+      <section id="indicadores"><h2>6. Definição dos indicadores</h2>
+        <ul><li><strong>Egressos localizados:</strong> número de identificadores distintos com ao menos um vínculo válido e geolocalizado.</li>
+        <li><strong>Vínculos ativos:</strong> total de registros profissionais encontrados. Um egresso pode possuir múltiplos vínculos.</li>
+        <li><strong>Municípios:</strong> combinações distintas de município e UF com presença de vínculos.</li>
+        <li><strong>Atenção Básica:</strong> proporção de vínculos classificados nessa categoria sobre o total geolocalizado.</li></ul>
+        <div class="formula">Percentual de cobertura = egressos localizados ÷ total da lista institucional × 100.</div>
+      </section>
+      <section id="caico"><h2>7. Análise do raio de $centro_nome</h2>
+        <p>A influência regional é estimada por um círculo geodésico de $raio_km km centrado nas coordenadas municipais de $centro_nome/$centro_uf. A distância entre $centro_nome e cada município de atuação é calculada pela fórmula de Haversine, considerando a curvatura terrestre.</p>
+        <div class="formula">d = 2R · atan2(√a, √(1−a)), onde R corresponde ao raio médio da Terra e <em>a</em> deriva das diferenças de latitude e longitude.</div>
+        <p>O indicador representa distância em linha reta. Ele não equivale ao percurso rodoviário, tempo de deslocamento ou área efetiva de influência assistencial.</p>
+      </section>
+      <section id="visualizacao"><h2>8. Estratégia de visualização</h2>
+        <p>Os mapas são produzidos com Folium/Leaflet e os gráficos com Plotly. O mapa de pinos permite ativar ou desativar áreas de atuação; o mapa de calor enfatiza densidade espacial. Os gráficos apresentam distribuição por UF, região, CBO, grande área e recorte territorial de $centro_nome.</p>
+      </section>
+      <section id="qualidade"><h2>9. Qualidade e rastreabilidade</h2>
+        <p>O processo registra ocorrências em arquivo de log, apresenta progresso individual da coleta e interrompe a geração visual quando o scraper retorna falha. A data e hora no cabeçalho desta página correspondem à última geração dos artefatos, não necessariamente à data de atualização administrativa do CNES.</p>
+      </section>
+      <section id="limitacoes"><h2>10. Limitações</h2>
+        <div class="warning"><strong>Interpretação necessária:</strong> os resultados dependem da completude e da atualidade do CNES. Ausência no painel não comprova ausência de atividade profissional.</div>
+        <ul><li>O CNES é uma fonte administrativa externa e pode conter vínculos desatualizados ou incompletos.</li>
+        <li>Mudanças na estrutura da página de consulta podem afetar a coleta automatizada.</li>
+        <li>Os indicadores são baseados em vínculos; múltiplos registros podem pertencer ao mesmo profissional.</li>
+        <li>As coordenadas municipais não representam endereços exatos.</li>
+        <li>A classificação em grandes áreas simplifica a diversidade dos CBOs.</li>
+        <li>O desenho transversal não permite avaliar trajetória longitudinal sem coletas históricas.</li></ul>
+      </section>
+      <section id="etica"><h2>11. Ética, privacidade e divulgação</h2>
+        <p>O dashboard público apresenta informações agregadas e não exibe o identificador utilizado na consulta. Arquivos brutos e logs devem ter acesso controlado, pois podem conter identificadores individuais. A divulgação deve observar as normas institucionais, os princípios da LGPD e as exigências éticas aplicáveis ao projeto de pesquisa.</p>
+      </section>
+      <section id="reproducibilidade"><h2>12. Reprodutibilidade</h2>
+        <p>O fluxo é executado por <code>executar_pipeline.bat</code>, que aciona primeiro a coleta e, somente após seu sucesso, o processamento e a geração das visualizações. As dependências estão registradas em <code>requirements.txt</code>, e os critérios analíticos permanecem versionados nos scripts do projeto.</p>
+      </section>
+    </article>
+  </main>
+  <footer><p>Fonte dos dados: CNES DATASUS.</p><p>Desenvolvido por Augusto Severo de Araújo como parte do projeto de mestrado. EMCM/UFRN.</p><p>&copy; $ano Todos os direitos reservados.</p></footer>
+</body></html>

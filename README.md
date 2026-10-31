@@ -35,6 +35,22 @@ Este projeto tem como finalidade desenvolver uma ferramenta automatizada para **
 - Mapas base sem chave de API (Esri cinza-claro e OpenStreetMap).
 - Saídas: `dashboard_final.html`, `mapa_pins.html`, `mapa_calor.html`, `relatorio_impressao.html` e `metodologia.html`. Os modelos das páginas ficam em `templates/`.
 
+### 4. Auditoria dos Dados
+`auditoria.py` confere se os números do painel podem ser rastreados até a coleta:
+- **Funil:** da lista de identificadores aos vínculos exibidos, com o motivo de cada exclusão.
+- **Coerência entre fontes:** lista, `scraper.log`, `egressos_resultados.csv` e o próprio gerador do painel precisam bater, inclusive na contagem de vínculos de cada identificador.
+- **Egressos sem vínculo:** separa falha técnica (consultar de novo), cadastro sem vínculo ativo e ausência na busca.
+- **Alertas para revisão:** identificador repetido na lista, ocupação não médica, 6 ou mais vínculos, vínculos a mais de 1.000 km entre si, encontrado só na busca sem acento.
+- **Conferência manual:** sorteia uma amostra (semente fixa) em `auditoria_amostra.csv`. Depois de conferir no site do CNES e preencher a coluna `confere_no_cnes`, a auditoria calcula a taxa de concordância.
+- **Rastreabilidade:** SHA-256 de cada arquivo de entrada, para provar quais dados geraram o painel.
+
+```bash
+python auditoria.py             # relatório interno, com identificadores
+python auditoria.py --anonimo   # identificadores trocados por códigos, para compartilhar
+```
+
+Os relatórios e a amostra são gravados na pasta `auditoria/`, separada dos arquivos do site. Eles contêm dados individuais: ficam fora do Git e **não devem ser enviados ao servidor web**.
+
 ---
 
 ## 🧭 Justificativa
@@ -70,7 +86,7 @@ python scraper.py
 python dashboard_generator.py
 ```
 
-> O gerador requer `egressos_resultados.csv` e `municipios.csv` na mesma pasta. Para publicar, envie os cinco HTMLs gerados e a pasta `assets/`.
+> O gerador requer `egressos_resultados.csv` e `municipios.csv` na mesma pasta. Para publicar, envie os cinco HTMLs gerados e a pasta `assets/`. A auditoria roda automaticamente no fim de `executar_pipeline.bat`.
 
 ---
 

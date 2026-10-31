@@ -24,5 +24,10 @@ if errorlevel 1 (
 )
 
 echo.
-echo Pronto. Abra dashboard_final.html.
+echo === Auditoria dos dados ===
+python auditoria.py
+if errorlevel 1 echo Atencao: a auditoria encontrou divergencia entre o painel e os dados. Veja auditoriauditoria.html.
+
+echo.
+echo Pronto. Abra dashboard_final.html. A auditoria fica em auditoriauditoria.html (nao publicar).
 pause

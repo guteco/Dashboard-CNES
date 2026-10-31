@@ -99,7 +99,7 @@
         <p>Os mapas são produzidos com Folium/Leaflet e os gráficos com Plotly. O mapa de pinos permite ativar ou desativar áreas de atuação; o mapa de calor enfatiza densidade espacial. Os gráficos apresentam distribuição por UF, região, CBO, grande área e recorte territorial de $centro_nome.</p>
       </section>
       <section id="qualidade"><h2>9. Qualidade e rastreabilidade</h2>
-        <p>O processo registra ocorrências em arquivo de log, apresenta progresso individual da coleta e interrompe a geração visual quando o scraper retorna falha. A data e hora no cabeçalho desta página correspondem à última geração dos artefatos, não necessariamente à data de atualização administrativa do CNES.</p>
+        <p>O processo registra ocorrências em arquivo de log, apresenta progresso individual da coleta e interrompe a geração visual quando o scraper retorna falha. Após cada geração, um script de auditoria reconcilia a lista de egressos, o log, os vínculos coletados e os números exibidos no painel; registra o motivo de cada exclusão; aponta casos para revisão manual, como identificadores repetidos, ocupações não médicas e vínculos muito distantes entre si; e guarda a impressão digital (SHA-256) dos arquivos usados. Uma amostra sorteada com semente fixa é conferida manualmente no site do CNES para estimar a concordância. A data e hora no cabeçalho desta página correspondem à última geração dos artefatos, não necessariamente à data de atualização administrativa do CNES.</p>
       </section>
       <section id="limitacoes"><h2>10. Limitações</h2>
         <div class="warning"><strong>Interpretação necessária:</strong> os resultados dependem da completude e da atualidade do CNES. Ausência no painel não comprova ausência de atividade profissional.</div>

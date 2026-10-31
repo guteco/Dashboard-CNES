@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>$titulo | Painel de Egressos EMCM/UFRN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#172033;--muted:#657087;--blue:#123f73;--light:#f4f7fb;--line:#dce4ef;--gold:#d99927;--ok:#15803d;--warn:#b45309}
+    *{box-sizing:border-box} body{margin:0;color:var(--ink);background:var(--light);font-family:Inter,Arial,sans-serif;line-height:1.6}
+    .hero{background:linear-gradient(125deg,#071b32,#124f8e);color:#fff;padding:28px 5vw 64px}
+    .hero-inner,main{max-width:1180px;margin:auto} .eyebrow{text-transform:uppercase;letter-spacing:.16em;color:#93c5fd;font-size:12px;font-weight:700}
+    h1{font-size:clamp(28px,4vw,42px);margin:8px 0 8px} .hero p{margin:0;color:#dbeafe}
+    .aviso{margin-top:18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:12px 14px;border-radius:10px;font-size:13px;color:#fde68a}
+    main{padding:0 5vw 48px} .resumo{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:-36px}
+    .numero{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.06)}
+    .numero strong{display:block;font-size:26px;color:var(--blue)} .numero span{font-size:12px;color:var(--muted)}
+    section{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:20px;box-shadow:0 10px 30px rgba(15,23,42,.04)}
+    h2{margin:0 0 4px;font-size:20px;color:var(--blue)} .descricao{margin:0 0 14px;color:var(--muted);font-size:13px}
+    .tabela{overflow-x:auto} table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;background:#eef4fa;color:var(--blue);font-weight:600} th,td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+    code{font-size:11px;word-break:break-all} .vazio{color:var(--muted);font-style:italic;margin:0}
+    .tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600}
+    .tag.ok{background:#dcfce7;color:var(--ok)} .tag.alerta{background:#fef3c7;color:var(--warn)} .tag.info{background:#e0f2fe;color:#0369a1}
+    .barra{display:inline-block;height:10px;background:#2563eb;border-radius:99px;min-width:2px}
+    .nota{font-size:12px;color:var(--muted)} footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+    @media(max-width:860px){.resumo{grid-template-columns:repeat(2,1fr)}}
+    @media print{body{background:#fff}.hero{padding-bottom:24px}.resumo{margin-top:12px}section{break-inside:avoid;box-shadow:none}}
+  </style>
+</head>
+<body>
+  <header class="hero"><div class="hero-inner">
+    <div class="eyebrow">Painel de Egressos EMCM/UFRN · Validação</div>
+    <h1>$titulo</h1>
+    <p>Reconciliação entre a lista de egressos, o log da coleta no CNES e os dados exibidos no painel. Gerado em $data_hora.</p>
+    <div class="aviso">$aviso</div>
+  </div></header>
+  <main>
+    <div class="resumo">$resumo</div>
+    <section><h2>1. Funil dos dados</h2>
+      <p class="descricao">Do total de identificadores consultados até os vínculos exibidos no painel, com o motivo de cada exclusão.</p>
+      $funil</section>
+    <section><h2>2. Coerência entre as fontes</h2>
+      <p class="descricao">Confere se lista, log, CSV e painel contam a mesma história.</p>
+      $verificacoes</section>
+    <section><h2>3. Egressos sem vínculo no painel</h2>
+      <p class="descricao">Classificados pelo que o log e o arquivo de erros registraram, com a ação sugerida.</p>
+      $sem_vinculo</section>
+    <section><h2>4. Egressos com alerta</h2>
+      <p class="descricao">Casos que merecem revisão manual, ordenados pelo número de alertas.</p>
+      $alertas</section>
+    <section><h2>5. Vínculos por egresso</h2>
+      <p class="descricao">Quantos egressos têm 0, 1, 2… vínculos no painel.</p>
+      $distribuicao</section>
+    <section><h2>6. Vínculos excluídos</h2>
+      <p class="descricao">Registros coletados que não aparecem no painel.</p>
+      $exclusoes</section>
+    <section><h2>7. Conferência manual por amostra</h2>
+      $amostra</section>
+    <section><h2>8. Rastreabilidade</h2>
+      <p class="descricao">Impressão digital (SHA-256) de cada arquivo usado. Se qualquer arquivo mudar, o código muda: isso permite provar quais dados geraram o painel.</p>
+      $arquivos
+      <p class="nota">Critérios: $criterios</p></section>
+  </main>
+  <footer>Desenvolvido por Augusto Severo de Araújo como parte do projeto de mestrado. EMCM/UFRN · $ano</footer>
+</body>
+</html>

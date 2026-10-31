@@ -29,14 +29,19 @@ RAIO_KM = 150
 RAIO_TERRA_KM = 6371.0088
 DESLOCAMENTO_MAX = 0.009  # graus; deslocamento visual dos pinos no mesmo município
 
-AREAS = ["Atenção Básica", "Especialidades Clínicas", "Especialidades Cirúrgicas", "Médico Residente", "Outras Especialidades"]
+AREAS = ["Atenção Básica", "Clínica Geral", "Especialidades Clínicas", "Especialidades Cirúrgicas", "Médico Residente", "Outras Especialidades"]
 CORES_AREA = {
     "Atenção Básica": "#16a085",
+    "Clínica Geral": "#e11d48",
     "Especialidades Clínicas": "#2563eb",
     "Especialidades Cirúrgicas": "#7c3aed",
     "Médico Residente": "#f59e0b",
-    "Outras Especialidades": "#e11d48",
+    "Outras Especialidades": "#64748b",
 }
+# Códigos CBO 2002 com grupo próprio; os demais seguem a família da CBO (ver categorizar_cbo)
+CBO_ATENCAO_BASICA = ("225142", "225130")  # Estratégia de Saúde da Família; Família e Comunidade
+CBO_CLINICA_GERAL = ("225125", "225170")   # Médico clínico; Médico generalista
+CBO_RESIDENTE = "2231F9"
 CORES_RECORTE = {"raio": "#f59e0b", "Restante do RN": "#2563eb", "Outros estados": "#64748b"}
 
 MAP_UF_REGIAO = {
@@ -71,19 +76,23 @@ def normalizar(txt):
 
 
 def categorizar_cbo(cbo_completo):
-    # Classificação operacional usada no painel publicado
+    # Retorna None para ocupações que não são de médico (provável homônimo na busca por nome)
     if pd.isna(cbo_completo):
-        return "Outras Especialidades"
-    cbo_codigo = str(cbo_completo).split(" - ")[0]
-    if cbo_codigo.startswith(("225120", "225142", "225125")):
-        return "Atenção Básica"
-    elif cbo_codigo.startswith(("225135", "225250", "225265", "225112", "225210", "225270")):
-        return "Especialidades Clínicas"
-    elif cbo_codigo.startswith(("225225", "225285", "225235")):
-        return "Especialidades Cirúrgicas"
-    elif cbo_codigo.startswith("2231F9") or "RESIDENTE" in str(cbo_completo).upper():
+        return None
+    cbo_codigo = str(cbo_completo).split(" - ")[0].strip()
+    if cbo_codigo == CBO_RESIDENTE or "RESIDENTE" in str(cbo_completo).upper():
         return "Médico Residente"
-    return "Outras Especialidades"
+    if cbo_codigo in CBO_ATENCAO_BASICA:
+        return "Atenção Básica"
+    if cbo_codigo in CBO_CLINICA_GERAL:
+        return "Clínica Geral"
+    if cbo_codigo.startswith("2251"):  # família 2251: médicos clínicos
+        return "Especialidades Clínicas"
+    if cbo_codigo.startswith("2252"):  # família 2252: médicos em especialidades cirúrgicas
+        return "Especialidades Cirúrgicas"
+    if cbo_codigo.startswith("225"):   # família 2253 e demais médicos
+        return "Outras Especialidades"
+    return None
 
 
 def haversine_km(lat1, lon1, lat2, lon2):
@@ -151,6 +160,10 @@ def carregar_dados():
     dados = dados.dropna(subset=["municipio", "uf", "cbo", "latitude", "longitude"])
     dados = dados[dados["uf"].isin(MAP_UF_REGIAO.keys())].copy()
     dados["grande_area_cbo"] = dados["cbo"].apply(categorizar_cbo)
+    nao_medicos = dados[dados["grande_area_cbo"].isna()]
+    if not nao_medicos.empty:
+        print(f"Aviso: {len(nao_medicos)} vínculo(s) com ocupação não médica, excluídos: {', '.join(sorted(nao_medicos['cbo'].unique()))}")
+        dados = dados[dados["grande_area_cbo"].notna()].copy()
     dados["regiao"] = dados["uf"].map(MAP_UF_REGIAO)
 
     centro = municipios_df[(municipios_df["nome_norm"] == CENTRO_RAIO[0]) & (municipios_df["codigo_uf"] == UF_CODIGO[CENTRO_RAIO[1]])].iloc[0]
@@ -188,7 +201,7 @@ def calcular_indicadores(dados, total_lista, centro):
         "raio_egressos": no_raio["nome"].nunique(),
         "raio_vinculos": len(no_raio),
         "raio_municipios": no_raio[["municipio_norm", "uf"]].drop_duplicates().shape[0],
-        # Mantém a fórmula do painel publicado: vínculos no raio (inclusive de outras UFs) sobre os vínculos do RN
+        # Todos os vínculos no raio (inclusive de outras UFs) em relação ao total de vínculos do RN
         "raio_pct_rn": pct(len(no_raio), vinculos_rn),
         "centro_nome": centro["nome"],
         "centro_uf": CENTRO_RAIO[1],
@@ -394,7 +407,7 @@ def gerar_paginas(dados, ind, graficos):
         (ind["raio_egressos"], "Egressos únicos"),
         (ind["raio_vinculos"], "Vínculos no raio"),
         (ind["raio_municipios"], "Municípios alcançados"),
-        (ind["raio_pct_rn"], "Dos vínculos no RN"),
+        (ind["raio_pct_rn"], "Vínculos no raio em relação ao total do RN"),
     ]
 
     dashboard = preencher_template(

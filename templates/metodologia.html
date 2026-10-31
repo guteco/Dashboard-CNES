@@ -69,7 +69,14 @@
       <section id="tratamento"><h2>4. Tratamento e validação</h2>
         <p>Os municípios são padronizados em letras maiúsculas, sem espaços laterais e sem sinais diacríticos. A UF é convertida para a sigla oficial e associada ao código utilizado pelo IBGE. Registros sem município, UF, CBO ou coordenadas são excluídos da visualização.</p>
         <h3>Classificação ocupacional</h3>
-        <p>Os códigos CBO são agrupados em Atenção Básica, Especialidades Clínicas, Especialidades Cirúrgicas, Médico Residente e Outras Especialidades. Essa classificação é operacional e definida explicitamente no código do projeto.</p>
+        <p>Os códigos da CBO 2002 são agrupados em seis grandes áreas. A classificação é operacional e está definida explicitamente no código do projeto:</p>
+        <ul><li><strong>Atenção Básica:</strong> médico da Estratégia de Saúde da Família (2251-42) e médico de família e comunidade (2251-30).</li>
+        <li><strong>Clínica Geral:</strong> médico clínico (2251-25) e médico generalista (2251-70). Ficam em grupo próprio porque o CNES registra essas ocupações tanto na atenção básica quanto em hospitais e unidades de urgência.</li>
+        <li><strong>Especialidades Clínicas:</strong> demais ocupações da família 2251 (médicos clínicos).</li>
+        <li><strong>Especialidades Cirúrgicas:</strong> ocupações da família 2252 (médicos em especialidades cirúrgicas), como ginecologia e obstetrícia, oftalmologia e ortopedia.</li>
+        <li><strong>Médico Residente:</strong> código 2231-F9.</li>
+        <li><strong>Outras Especialidades:</strong> família 2253 (medicina diagnóstica e terapêutica) e demais ocupações médicas.</li></ul>
+        <p>Vínculos com ocupações não médicas, como enfermeiro ou diretor de serviços de saúde, são excluídos, pois indicam provável homonímia na busca por nome.</p>
       </section>
       <section id="geo"><h2>5. Georreferenciamento</h2>
         <p>O cruzamento geográfico usa município normalizado e código da UF. As coordenadas representam o centro municipal, não o estabelecimento de saúde nem a residência do profissional.</p>
@@ -79,7 +86,8 @@
         <ul><li><strong>Egressos localizados:</strong> número de identificadores distintos com ao menos um vínculo válido e geolocalizado.</li>
         <li><strong>Vínculos ativos:</strong> total de registros profissionais encontrados. Um egresso pode possuir múltiplos vínculos.</li>
         <li><strong>Municípios:</strong> combinações distintas de município e UF com presença de vínculos.</li>
-        <li><strong>Atenção Básica:</strong> proporção de vínculos classificados nessa categoria sobre o total geolocalizado.</li></ul>
+        <li><strong>Atenção Básica:</strong> proporção de vínculos classificados nessa categoria sobre o total geolocalizado.</li>
+        <li><strong>Vínculos no raio em relação ao total do RN:</strong> todos os vínculos situados no raio de $centro_nome, inclusive os de municípios de outros estados, divididos pelo total de vínculos no RN.</li></ul>
         <div class="formula">Percentual de cobertura = egressos localizados ÷ total da lista institucional × 100.</div>
       </section>
       <section id="caico"><h2>7. Análise do raio de $centro_nome</h2>
